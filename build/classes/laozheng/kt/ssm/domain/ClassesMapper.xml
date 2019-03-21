@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace用来找唯一的Mapper文件 一般是domain的全路径名+Mapper -->
+<mapper namespace="laozheng.kt.ssm.mapper.ClassesMapper">
+<select id="queryAll"  resultType="Classes">
+ 		select * from t_class
+ 	</select>
+</mapper>

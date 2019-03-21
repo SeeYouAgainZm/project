@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context.xsd">
+	<!--1.jdbc.property 2.dataSource 3.sqlSessionFactory 4、mapper 5、service 
+		6、action -->
+	<context:property-placeholder
+		location="classpath:jdbc.properties" />
+	<!-- 数据源 -->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<!-- 依赖注入连接池需要的属性 -->
+		<property name="driverClassName"
+			value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 扫描mapper接口的包路径 -->
+		<property name="basePackage" value="laozheng.kt.ssm.mapper" />
+	</bean>
+	<!-- sqlSessionFactory -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 引入数据源 -->
+		<property name="dataSource" ref="dataSource" />
+		<!--加载所有的mapper路径 -->
+		<property name="mapperLocations"
+			value="classpath:laozheng/kt/ssm/domain/*Mapper.xml" />
+		<!--配置别名 -->
+		<property name="typeAliasesPackage"
+			value="laozheng.kt.ssm.domain" />
+	</bean>
+	
+	<context:component-scan base-package="laozheng.kt.ssm.service"></context:component-scan>
+
+
+</beans>
